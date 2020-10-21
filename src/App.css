@@ -1,38 +1,122 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.navbar {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 100%;
+  height: 40px;
+  background: rgb(15, 2, 2);
+  
+  color: #FFF;
+  font-size: 20px;
+  
+  
+}
+
+.navbar span {
+  margin: 8px;
+}
+
+.container {
+  display: flex;
+  height: 500px;
+  margin: 50px;
+  background: #FFF;
+
+  border-radius: 10px;
+
+  box-shadow: 0.2em 0.2em 0.8em rgb(24, 24, 20);
+}
+
+.container .list-note {
+  width: 300px;
+  height: 100%;
+  border-right: 1px solid #DCDCDC ;
+
+}
+
+.list-note .header {
+  display: flex;
+  width: 100%;
+  height: 40px;
+
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+
+  border-bottom: 1px solid #DCDCDC ;
 }
 
-.App-link {
-  color: #61dafb;
+.list-note .search {
+  width: 100%;
+  height: 40px;
+  border-bottom: 1px solid #DCDCDC ;
+
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.list-note .search input {
+  width: 90%;
+  border: 0;
+  margin: 12px;
+}
+
+.list-note .notes-row {
+  display: flex;
+  width: 100%;
+  height: 40px;
+
+  justify-content: start;
+  align-items: center;
+
+  cursor: pointer;
+}
+
+.list-note .notes-row:hover {
+  background: #F0FFFF;
+}
+
+
+.select {
+  background: #EEE9E9;
+}
+
+.notes-row .title-note {
+  margin-left: 10px;
+  font-size: 16px;
+  width: 70%;
+}
+
+.notes-row .date-note{
+  text-align: right;
+  margin-right: 5px;
+  font-size: 10px;
+  color: rgb(167, 163, 163);
+
+}
+
+.container .view-note {
+  width: 100%;
+  height: 100%;
+}
+
+.view-note .header-view {
+  display: flex;
+  width: 100%;
+  height: 40px;
+
+  justify-content: center;
+  align-items: center;
+
+  /* background: blue; */
+
+  border-bottom: 1px solid #DCDCDC ;
+}
+
+.header-view .icons {
+  width: 20%;
+  text-align: right;
+}
+
+.view-note .detail-note {
+  height: 88%;
+  margin: 10px;
+  
+  overflow: auto;
+
 }
