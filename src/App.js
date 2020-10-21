@@ -1,44 +1,68 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './App.css';
+import NotesList from './components/NotesList';
+import NoteView from './components/NoteView';
+
+const listNote = [
+
+  {id: 1, title: 'Estudo Reactjs', date: '18.10.2020 10:30', note: 'Organizar o material de estudo', select: false},
+  {id: 2, title: 'Aprender Git e Github', date: '18.10.2020 10:30', note: 'Começando os estudo com react', select: true},
+  {id: 3, title: 'Projeto para estudo', date: '18.10.2020 10:30', note: 'Começando os estudo com react', select: false},
+  {id: 4, title: 'Estudo Reactjs', date: '18.10.2020 10:30', note: 'Começando os estudo com react', select: false},
+]
 
 function App() {
+  const [notes, setNotes] = useState(listNote);
+  const [noteselect, setNoteselect] = useState({id: null, title: 'Selecione uma Nota', date: '', note:''});
+
+  const selectNote = id => {
+    let selectedNotes = notes.map(note => {
+        if (note.id === id) {
+            note.select = true;
+            setNoteselect({
+              id: id,
+              title: note.title,
+              date: note.date,
+              note: note.note
+            })
+        } else {
+            note.select = false;
+        }
+
+        return note
+    });
+   
+    setNotes(selectedNotes);     
+
+  }
+
+
   return (
     <>
-      <div class="navbar">
+      <div className="navbar">
           <span>Notes App React</span>
       </div> 
       
-      <div class="container">
+      <div className="container">
         
-        <div class="list-note">
-            <div class="header">
+        <div className="list-note">
+            <div className="header">
                 <span>Minhas Notas</span> 
             </div>
-            <div class="search">
+            <div className="search">
                 <input type="text" placeholder="Pesquisa..." />
             </div>
+            
+            {/* Lista de Notas */}
 
-            <div class="notes-row">
-                <span class="title-note">Titulo Nota</span>
-                <span class="date-note">21.10.2020 12:04</span>
-            </div>
+           <NotesList notes={notes} selectNote={selectNote}/>
             
 
         </div>
 
-        <div class="view-note">
-            <div class="header-view">
-                <span>Titulo Nota - 21.10.2020 12:04</span> 
-                <div class="icons">
-                    <i class="fas fa-pencil-alt"></i>
-                    <i class="far fa-trash-alt"></i>
-                </div>
-            </div>
-            <div class="detail-note">
-                
-            </div>
-        </div>
+        <NoteView noteselect={noteselect} />
+
     </div>
 
     </>
