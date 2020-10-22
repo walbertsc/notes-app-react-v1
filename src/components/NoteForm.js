@@ -2,8 +2,25 @@ import React from 'react';
 
 import './modal.css';
 
-function NoteForm({active, handleClickClose}) {
+function NoteForm({active, handleClickClose, addNotes}) {
     
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        const date = new Date();
+        const datanote = date.getDate() + '.' + (date.getMonth()+1) + '.' + date.getFullYear()+' '+date.getHours()+':'+date.getMinutes();
+
+        addNotes({
+            id: Math.floor(Math.random() * 10000),
+            title: 'Nota Teste',
+            date: datanote,
+            note: 'Teste com nova nota',
+            select: false
+        })
+
+        handleClickClose();
+    }
+
     return (
         <div className={active ? 'show modal' : 'modal' }>
             <div className="modal-content">
@@ -12,7 +29,7 @@ function NoteForm({active, handleClickClose}) {
                     <h2>Nova Nota</h2>
                 </div>
                 <div className="modal-body">
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div>
                             <label htmlFor="">Titulo</label>
                             <input type="text"/>    

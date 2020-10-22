@@ -39,6 +39,12 @@ function App() {
 
   }
 
+  function addNotes(note) {
+    const newNote = [note,...notes];
+
+    setNotes(newNote);
+  }
+
   function handleClickOpen() {
     setModalActive(true);
   }
@@ -77,7 +83,7 @@ function App() {
 
     </div>
 
-    <NoteForm active={modalactive} handleClickClose={handleClickClose}/>
+    <NoteForm active={modalactive} handleClickClose={handleClickClose} addNotes={addNotes}/>
 
     </>
   );
