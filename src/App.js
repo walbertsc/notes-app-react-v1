@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import './App.css';
+import NoteForm from './components/NoteForm';
 import NotesList from './components/NotesList';
 import NoteView from './components/NoteView';
 
@@ -15,7 +16,8 @@ const listNote = [
 function App() {
   const [notes, setNotes] = useState(listNote);
   const [noteselect, setNoteselect] = useState({id: null, title: 'Selecione uma Nota', date: '', note:''});
-
+  const [modalactive, setModalActive] = useState(false);
+  
   const selectNote = id => {
     let selectedNotes = notes.map(note => {
         if (note.id === id) {
@@ -37,11 +39,21 @@ function App() {
 
   }
 
+  function handleClickOpen() {
+    setModalActive(true);
+  }
+  
+  function handleClickClose() {
+    setModalActive(false);
+    
+  }
+
 
   return (
     <>
       <div className="navbar">
           <span>Notes App React</span>
+          <span onClick={() => handleClickOpen()}>Nova Nota</span>
       </div> 
       
       <div className="container">
@@ -64,6 +76,8 @@ function App() {
         <NoteView noteselect={noteselect} />
 
     </div>
+
+    <NoteForm active={modalactive} handleClickClose={handleClickClose}/>
 
     </>
   );
