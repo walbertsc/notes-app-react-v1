@@ -1,24 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './modal.css';
 
 function NoteForm({active, handleClickClose, addNotes}) {
-    
+    const [title, setTitle] = useState('');
+    const [note, setNote] = useState('');
+
+
+
     function handleSubmit(e) {
         e.preventDefault();
 
         const date = new Date();
-        const datanote = date.getDate() + '.' + (date.getMonth()+1) + '.' + date.getFullYear()+' '+date.getHours()+':'+date.getMinutes();
+        const dataNote = date.getDate() + '.' + (date.getMonth()+1) + '.' + date.getFullYear();
+        const horaNote = date.getHours()+':'+date.getMinutes();
 
         addNotes({
             id: Math.floor(Math.random() * 10000),
-            title: 'Nota Teste',
-            date: datanote,
-            note: 'Teste com nova nota',
+            title: title,
+            date: dataNote+' '+horaNote,
+            note: note,
             select: false
         })
 
+        setTitle('');
+        setNote('');
+        
         handleClickClose();
+        
     }
 
     return (
@@ -32,11 +41,11 @@ function NoteForm({active, handleClickClose, addNotes}) {
                     <form onSubmit={handleSubmit}>
                         <div>
                             <label htmlFor="">Titulo</label>
-                            <input type="text"/>    
+                            <input type="text" value={title} onChange={event => setTitle(event.target.value)}/>    
                         </div>
                         <div>
                             <label htmlFor="">Descrição Nota</label>
-                            <textarea name="" id="" cols="30" rows="10"></textarea>
+                            <textarea cols="30" rows="10" value={note} onChange={event => setNote(event.target.value)}></textarea>
                         </div>
                         <button>Salvar</button>
                         <button>Cancelar</button>

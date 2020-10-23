@@ -1,6 +1,9 @@
 import React from 'react';
 
+import MDEditor from '@uiw/react-md-editor';
+
 function NoteView({noteselect}) {
+    
     return (
         <div className="view-note">
             <div className="header-view">
@@ -11,7 +14,7 @@ function NoteView({noteselect}) {
                 </div>
             </div>
             <div classNameName="detail-note">
-                {noteselect.note}
+                <MDEditor.Markdown source={noteselect.note} />
             </div>
         </div>
     )
