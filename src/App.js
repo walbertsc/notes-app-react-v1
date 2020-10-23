@@ -8,26 +8,29 @@ import NoteView from './components/NoteView';
 const listNote = [
 
   {id: 1, title: 'Estudo Reactjs', date: '18.10.2020 10:30', note: 'Organizar o material de estudo', select: false},
-  {id: 2, title: 'Aprender Git e Github', date: '18.10.2020 10:30', note: 'Começando os estudo com react', select: true},
+  {id: 2, title: 'Aprender Git e Github', date: '18.10.2020 10:30', note: 'Começando os estudo com react', select: false},
   {id: 3, title: 'Projeto para estudo', date: '18.10.2020 10:30', note: 'Começando os estudo com react', select: false},
   {id: 4, title: 'Estudo Reactjs', date: '18.10.2020 10:30', note: 'Começando os estudo com react', select: false},
 ]
 
 function App() {
   const [notes, setNotes] = useState(listNote);
-  const [noteselect, setNoteselect] = useState({id: null, title: 'Selecione uma Nota', date: '', note:''});
+  const [noteselect, setNoteselect] = useState({id: null, title: '', date: '', note:''});
   const [modalactive, setModalActive] = useState(false);
   
+  
   const selectNote = id => {
+    
     let selectedNotes = notes.map(note => {
         if (note.id === id) {
+            
             note.select = true;
-            setNoteselect({
+             setNoteselect({
               id: id,
               title: note.title,
               date: note.date,
               note: note.note
-            })
+            });
         } else {
             note.select = false;
         }
@@ -35,7 +38,9 @@ function App() {
         return note
     });
    
-    setNotes(selectedNotes);     
+    setNotes(selectedNotes);  
+    
+  
 
   }
 
@@ -45,13 +50,27 @@ function App() {
     setNotes(newNote);
   }
 
-  function handleClickOpen() {
+  function editNotes(editNote) {
+    let updateNotes = notes.map(note => {
+      if (note.id === noteselect.id) {
+        note.title = editNote.title;
+        note.date = editNotes.date;
+        note.note = editNote.note;
+        note.select = false;
+      }
+      return note
+    })
+    setNotes(updateNotes);
+  }  
+
+  function handleClickNew() {
     setModalActive(true);
+    
   }
   
   function handleClickClose() {
     setModalActive(false);
-    
+ 
   }
 
 
@@ -59,7 +78,7 @@ function App() {
     <>
       <div className="navbar">
           <span>Notes App React</span>
-          <span onClick={() => handleClickOpen()}>Nova Nota</span>
+          <span onClick={() => handleClickNew()}>Nova Nota</span>
       </div> 
       
       <div className="container">
@@ -73,17 +92,22 @@ function App() {
             </div>
             
             {/* Lista de Notas */}
-
-           <NotesList notes={notes} selectNote={selectNote}/>
+           
+           <NotesList notes={notes} selectNote={selectNote} />
             
 
         </div>
 
-        <NoteView noteselect={noteselect} />
+        <NoteView noteselect={noteselect} editNotes={editNotes} />
+        
 
     </div>
 
-    <NoteForm active={modalactive} handleClickClose={handleClickClose} addNotes={addNotes}/>
+    <NoteForm 
+      active={modalactive}
+      handleClickClose={handleClickClose}
+      addNotes={addNotes}
+     />
 
     </>
   );

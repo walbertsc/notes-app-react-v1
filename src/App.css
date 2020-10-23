@@ -111,6 +111,7 @@
 .header-view .icons {
   width: 20%;
   text-align: right;
+  cursor: pointer;
 }
 
 .view-note .detail-note {
