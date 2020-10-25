@@ -54,14 +54,25 @@ function App() {
     let updateNotes = notes.map(note => {
       if (note.id === noteselect.id) {
         note.title = editNote.title;
-        note.date = editNotes.date;
+        note.date = editNote.date;
         note.note = editNote.note;
-        note.select = false;
+        note.select = true;
       }
       return note
     })
     setNotes(updateNotes);
-  }  
+    selectNote(noteselect.id);
+    
+  }
+  
+  function removeNote(id) {
+    const deleteNote = [...notes].filter(note => note.id !== id);
+
+    setNotes(deleteNote);
+    setNoteselect({id: null, title: '', date: '', note:''});
+
+  }
+
 
   function handleClickNew() {
     setModalActive(true);
@@ -98,7 +109,8 @@ function App() {
 
         </div>
 
-        <NoteView noteselect={noteselect} editNotes={editNotes} />
+        {noteselect.id != null ? (<NoteView noteselect={noteselect} editNotes={editNotes} removeNote={removeNote} />) : '' }
+        
         
 
     </div>

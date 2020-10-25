@@ -1,0 +1,46 @@
+.view-note {
+    width: 100%;
+    height: 100%;
+}
+
+.view-note span {
+    margin-left: 5px;
+}
+
+.view-note lu li {
+    list-style: none;
+    display: inline;
+    margin: 5px;
+}
+  
+.view-note .header-view {
+    display: flex;
+    width: 100%;
+    height: 40px;
+  
+    justify-content: space-between;
+    align-items: center;
+  
+    /* background: blue; */
+  
+    border-bottom: 1px solid #DCDCDC ;
+}
+  
+.header-view .icons {
+    display: flex;
+    /* width: 20%; */
+    text-align: right;
+    cursor: pointer;
+    justify-content: flex-end;
+    margin-right: 10px;
+
+    /* background: blue; */
+}
+  
+.view-note .detail-note {
+    height: 88%;
+    margin: 10px 20px;
+    
+    overflow: auto;
+  
+}

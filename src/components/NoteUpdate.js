@@ -14,7 +14,6 @@ function NoteUpdate({active, noteselect, editNotes, handleClickClose}) {
         const horaNote = date.getHours()+':'+date.getMinutes();
 
         editNotes({
-            id: Math.floor(Math.random() * 10000),
             title: title,
             date: dataNote+' '+horaNote,
             note: note,
@@ -28,31 +27,31 @@ function NoteUpdate({active, noteselect, editNotes, handleClickClose}) {
         
     }
 
-    console.log(noteselect.title);
-
+    
     return (
         <div className={active ? 'show modal' : 'modal' }>
             <div className="modal-content">
                 <div className="modal-header">
-                    <span className="close" onClick={() => handleClickClose()}>X</span>
+                    <span className="close" onClick={() => handleClickClose()} ><i class="fas fa-times" ></i></span> 
                     <h2>Editar Nota</h2>
                 </div>
                 <div className="modal-body">
                     <form onSubmit={handleSubmit}>
                         <div>
-                            <label htmlFor="">Titulo</label>
-                            <input type="text" value={title} onChange={event => setTitle(event.target.value)}/>    
+                            <label htmlFor="title">Titulo</label>
+                            <input type="text" name='title' value={title} onChange={event => setTitle(event.target.value)}/>    
                         </div>
                         <div>
                             <label htmlFor="">Descrição Nota</label>
-                            <textarea cols="30" rows="10" value={note} onChange={event => setNote(event.target.value)}></textarea>
+                            <textarea cols="68" rows="15" value={note} onChange={event => setNote(event.target.value)}></textarea>
                         </div>
-                        <button>Salvar</button>
-                        <button>Cancelar</button>
+                        <div className='button'>
+                            <button>Salvar</button>
+                            <button>Cancelar</button>
+                        </div>
                     </form>
                 </div>
-                <div className="modal-footer">
-
+                <div className="modal-footer">          
                 </div>
             </div>
         </div>
