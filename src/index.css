@@ -5,9 +5,12 @@
   box-sizing: border-box;
 }
 
-body {
+html, body {
+  width: 100%;
   height: 100%;
-  background: rgb(240, 226, 226);
+  overflow: hidden;
+  
+  /* background: rgb(240, 226, 226); */
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -15,7 +18,3 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}

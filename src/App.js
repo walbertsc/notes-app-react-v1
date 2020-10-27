@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 
 import './App.css';
-import NoteForm from './components/NoteForm';
+// import NoteForm from './components/NoteForm';
 import NotesList from './components/NotesList';
 import NoteView from './components/NoteView';
 
 const listNote = [
 
-  {id: 1, title: 'Estudo Reactjs', date: '18.10.2020 10:30', note: 'Organizar o material de estudo', select: false},
-  {id: 2, title: 'Aprender Git e Github', date: '18.10.2020 10:30', note: 'Começando os estudo com react', select: false},
+  {id: 1, title: 'Estudo Reactjs', date: '18.10.2020 10:30', note: '# Organizar o material de estudo', select: false},
+  {id: 2, title: 'Aprender Git e Github', date: '18.10.2020 10:30', note: '**Estudando Git e Gibhub**', select: false},
   {id: 3, title: 'Projeto para estudo', date: '18.10.2020 10:30', note: 'Começando os estudo com react', select: false},
-  {id: 4, title: 'Estudo Reactjs', date: '18.10.2020 10:30', note: 'Começando os estudo com react', select: false},
+  {id: 4, title: 'Estudo Reactjs', date: '18.10.2020 10:30', note: '- **Atenção** Estudo de html + css.', select: false},
 ]
 
 function App() {
@@ -74,52 +74,50 @@ function App() {
   }
 
 
-  function handleClickNew() {
-    setModalActive(true);
-    
-  }
-  
-  function handleClickClose() {
-    setModalActive(false);
- 
-  }
-
 
   return (
     <>
       <div className="navbar">
-          <span>Notes App React</span>
-          <span onClick={() => handleClickNew()}>Nova Nota</span>
-      </div> 
+        <span className='logo'><i class="fas fa-tasks"></i></span>
+        <span className='title-app'>Notes App React</span>
+      </div>
       
       <div className="container">
         
         <div className="list-note">
-            <div className="header">
-                <span>Minhas Notas</span> 
-            </div>
-            <div className="search">
-                <input type="text" placeholder="Pesquisa..." />
-            </div>
-            
-            {/* Lista de Notas */}
+          <div className="header">
+             <ul>
+                 <li className='item-menu'><i className="far fa-file-alt"></i></li>
+                 <li className='item-menu'><i className="fas fa-pencil-alt"></i></li>
+                 <li className='item-menu'><i className="far fa-trash-alt"></i></li>
+             </ul>   
+          </div>
            
+                     
            <NotesList notes={notes} selectNote={selectNote} />
-            
-
         </div>
 
-        {noteselect.id != null ? (<NoteView noteselect={noteselect} editNotes={editNotes} removeNote={removeNote} />) : '' }
-        
-        
+        <div className="preview">
+            <div className="title-bar">
+                {noteselect.id != null ? (
+                <>
+                  <span>{noteselect.title}</span>
+                  <span className="date-note-bar">
+                    <i class="far fa-calendar-alt"></i>{noteselect.date}
+                  </span>
+                </>) : '' }
+                
+             </div>
+    
+            <div className="view-note">
+              {noteselect.id != null ? (<NoteView noteselect={noteselect} />) : '' } 
+            </div>
 
-    </div>
-
-    <NoteForm 
-      active={modalactive}
-      handleClickClose={handleClickClose}
-      addNotes={addNotes}
-     />
+        </div>
+ 
+        
+      </div>
+   
 
     </>
   );
