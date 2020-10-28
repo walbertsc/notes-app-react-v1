@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import './App.css';
-// import NoteForm from './components/NoteForm';
+import NoteForm from './components/NoteForm';
 import NotesList from './components/NotesList';
 import NoteView from './components/NoteView';
 
@@ -16,7 +16,10 @@ const listNote = [
 function App() {
   const [notes, setNotes] = useState(listNote);
   const [noteselect, setNoteselect] = useState({id: null, title: '', date: '', note:''});
-  const [modalactive, setModalActive] = useState(false);
+  const [novo, setNovo] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const [operation, setOperation] = useState(false);
+  const [listshow, setListShow] = useState(true);
   
   
   const selectNote = id => {
@@ -39,8 +42,7 @@ function App() {
     });
    
     setNotes(selectedNotes);  
-    
-  
+     
 
   }
 
@@ -48,6 +50,10 @@ function App() {
     const newNote = [note,...notes];
 
     setNotes(newNote);
+    setNovo(false);
+    setEdit(false);
+    setOperation(false);
+    setListShow(true);
   }
 
   function editNotes(editNote) {
@@ -60,20 +66,59 @@ function App() {
       }
       return note
     })
+
     setNotes(updateNotes);
     selectNote(noteselect.id);
+    setNovo(false);
+    setEdit(false);
+    setOperation(false);
+    setListShow(true);
     
   }
   
-  function removeNote(id) {
-    const deleteNote = [...notes].filter(note => note.id !== id);
+  function removeNote() {
+    
+    if (noteselect.id === null ) {
+      return
+    }
+    
+    const deleteNote = [...notes].filter(note => note.id !== noteselect.id);
 
     setNotes(deleteNote);
     setNoteselect({id: null, title: '', date: '', note:''});
 
   }
 
+  function cancelEditMode() {
+    setNovo(false);
+    setEdit(false);
+    setOperation(false);
+    setListShow(true);
+  }
+  
+  function handleClickEdit() {
+    if (noteselect.id === null) {
+      return;
+    }
+    
+    setOperation(true);
+    setEdit(true);
+    setNovo(false);
 
+    setListShow(false);
+    // setNoteselect({id: null, title: '', date: '', note:''});
+
+
+  }
+
+  function handleClickNew() {
+       
+    setOperation(true);
+    setEdit(false);
+    setNovo(true);
+
+    setListShow(false);
+  }
 
   return (
     <>
@@ -84,37 +129,23 @@ function App() {
       
       <div className="container">
         
-        <div className="list-note">
-          <div className="header">
+        <div className={listshow ? "list-note" : "list-note noshow"}>
+          <div className="tool-bar">
              <ul>
-                 <li className='item-menu'><i className="far fa-file-alt"></i></li>
-                 <li className='item-menu'><i className="fas fa-pencil-alt"></i></li>
-                 <li className='item-menu'><i className="far fa-trash-alt"></i></li>
+                 <li className='item-menu'><i className="far fa-file-alt" onClick={() => handleClickNew()}></i></li>
+                 <li className='item-menu'><i className="fas fa-pencil-alt" onClick={() => handleClickEdit()}></i></li>
+                 <li className='item-menu'><i className="far fa-trash-alt" onClick={() => removeNote()}></i></li>
              </ul>   
           </div>
-           
-                     
-           <NotesList notes={notes} selectNote={selectNote} />
+          <NotesList notes={notes} selectNote={selectNote} />
         </div>
 
-        <div className="preview">
-            <div className="title-bar">
-                {noteselect.id != null ? (
-                <>
-                  <span>{noteselect.title}</span>
-                  <span className="date-note-bar">
-                    <i class="far fa-calendar-alt"></i>{noteselect.date}
-                  </span>
-                </>) : '' }
-                
-             </div>
-    
-            <div className="view-note">
-              {noteselect.id != null ? (<NoteView noteselect={noteselect} />) : '' } 
-            </div>
+        {/* {noteselect.id != null ? (<NoteView noteselect={noteselect} />) : '' }  */}
 
-        </div>
- 
+        { !operation 
+          ? <NoteView noteselect={noteselect} />
+          : (<NoteForm edit={edit} novo={novo} addNotes={addNotes} editNotes={editNotes} cancelEditMode={cancelEditMode} noteselect={noteselect}/>)}
+
         
       </div>
    

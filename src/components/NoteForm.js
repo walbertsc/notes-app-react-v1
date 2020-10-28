@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
-import './modal.css';
+import MDEditor from '@uiw/react-md-editor';
 
-function NoteForm({active, handleClickClose, addNotes}) {
-    const [title, setTitle] = useState('');
-    const [note, setNote] = useState('');
+// import './modal.css';
 
-
+function NoteForm({edit, novo, addNotes, editNotes, cancelEditMode, noteselect}) {
+    const [title, setTitle] = useState(edit ? noteselect.title : '');
+    const [note, setNote] = useState(edit ? noteselect.note : '' );
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -15,48 +15,72 @@ function NoteForm({active, handleClickClose, addNotes}) {
         const dataNote = date.getDate() + '.' + (date.getMonth()+1) + '.' + date.getFullYear();
         const horaNote = date.getHours()+':'+date.getMinutes();
 
-        addNotes({
-            id: Math.floor(Math.random() * 10000),
-            title: title,
-            date: dataNote+' '+horaNote,
-            note: note,
-            select: false
-        })
+        if (novo) { 
 
-        setTitle('');
-        setNote('');
+            addNotes({
+                id: Math.floor(Math.random() * 10000),
+                title: title,
+                date: dataNote+' '+horaNote,
+                note: note,
+                select: false
+            })
+
+        }
         
-        handleClickClose();
+        if (edit) {
+            editNotes({
+                title: title,
+                date: dataNote+' '+horaNote,
+                note: note,
+                select: false
+            })
+        }
+
+           
         
     }
 
     return (
-        <div className={active ? 'show modal' : 'modal' }>
-            <div className="modal-content">
-                <div className="modal-header">
-                    <span className="close" onClick={() => handleClickClose()} ><i class="fas fa-times" ></i></span> 
-                    <h2>Nova Nota</h2>
-                </div>
-                <div className="modal-body">
-                    <form onSubmit={handleSubmit}>
-                        <div>
-                            <label htmlFor="">Titulo</label>
-                            <input type="text" value={title} required onChange={event => setTitle(event.target.value)}/>    
-                        </div>
-                        <div>
-                            <label htmlFor="">Descrição Nota</label>
-                            <textarea cols="68" rows="15" value={note} required onChange={event => setNote(event.target.value)}></textarea>
-                        </div>
-                        <div className='button'>
-                            <button>Salvar</button>
-                            <button type='button' onClick={() => handleClickClose()}>Cancelar</button>
-                        </div>
-                    </form>
-                </div>
-                <div className="modal-footer">
+        
+        <div className="preview">
+            <form onSubmit={handleSubmit}> 
+                <div className="title-bar edit">
+                    {novo 
+                        ? (<span><i className="far fa-file-alt"></i> Nova Nota</span>)
+                        : (<span><i className="fas fa-pencil-alt"></i> Editar Nota</span>)}                
+                    <input
+                     type="text"
+                     placeholder="Titula da Nota"
+                     maxlength="29"
+                     value={title}
+                     onChange={event => setTitle(event.target.value)}
+                     required
+                    />
+                    <div className="button">                
+                        <button>Salvar</button>
+                        <button type="button" onClick={() => cancelEditMode() }>Cancelar</button>
+                    </div>
+                    <span className="title-preview">Preview HTML</span>                    
 
                 </div>
-            </div>
+        
+                <div className="new-note">
+                    
+                    <div className="edit-note">
+                        <textarea
+                         placeholder="Informe o texto da nota em formato Markdown..."
+                         value={note}
+                         onChange={event => setNote(event.target.value)}
+                         required></textarea>
+                    </div>
+
+                    <div className="html-view">
+                        <MDEditor.Markdown source={note}/>
+                    </div>
+                </div>
+
+            </form>
+
         </div>
     )
 }
