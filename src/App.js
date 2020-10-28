@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './App.css';
 import ModalPopup from './components/ModalPopup';
@@ -6,16 +6,9 @@ import NoteForm from './components/NoteForm';
 import NotesList from './components/NotesList';
 import NoteView from './components/NoteView';
 
-const listNote = [
-
-  {id: 1, title: 'Estudo Reactjs', date: '18.10.2020 10:30', note: '# Organizar o material de estudo', select: false},
-  {id: 2, title: 'Aprender Git e Github', date: '18.10.2020 10:30', note: '**Estudando Git e Gibhub**', select: false},
-  {id: 3, title: 'Projeto para estudo', date: '18.10.2020 10:30', note: 'Começando os estudo com react', select: false},
-  {id: 4, title: 'Estudo Reactjs', date: '18.10.2020 10:30', note: '- **Atenção** Estudo de html + css.', select: false},
-]
 
 function App() {
-  const [notes, setNotes] = useState(listNote);
+  const [notes, setNotes] = useState([]);
   const [noteselect, setNoteselect] = useState({id: null, title: '', date: '', note:''});
   const [novo, setNovo] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -23,6 +16,15 @@ function App() {
   const [listshow, setListShow] = useState(true);
   const [show, setShow] = useState(false);
   
+  useEffect(() => {
+    const readNotes = () => {
+      if (localStorage.getItem('listnotes')) {
+        setNotes(JSON.parse(localStorage.getItem('listnotes')));
+      }
+    }
+    readNotes()
+  },[]);
+
   
   const selectNote = id => {
     
@@ -52,10 +54,14 @@ function App() {
     const newNote = [note,...notes];
 
     setNotes(newNote);
+    
+
     setNovo(false);
     setEdit(false);
     setOperation(false);
     setListShow(true);
+
+    localStorage.setItem('listnotes', JSON.stringify(newNote));
   }
 
   function editNotes(editNote) {
@@ -70,6 +76,7 @@ function App() {
     })
 
     setNotes(updateNotes);
+    localStorage.setItem('listnotes', JSON.stringify(updateNotes));
     selectNote(noteselect.id);
     setNovo(false);
     setEdit(false);
@@ -88,6 +95,8 @@ function App() {
 
     setNotes(deleteNote);
     setNoteselect({id: null, title: '', date: '', note:''});
+    
+    localStorage.setItem('listnotes', JSON.stringify(deleteNote));
 
   }
 
@@ -139,7 +148,7 @@ function App() {
   return (
     <>
       <div className="navbar">
-        <span className='logo'><i class="fas fa-tasks"></i></span>
+        <span className='logo'><i className="fas fa-tasks"></i></span>
         <span className='title-app'>Notes App React</span>
       </div>
       

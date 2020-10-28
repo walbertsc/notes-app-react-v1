@@ -8,7 +8,7 @@ function NotesList({notes, selectNote }) {
             onClick={() => selectNote(note.id)}
             >
             <span className="title-note">{note.title}</span>
-            <span className="date-note"><i class="far fa-calendar-alt"></i> {note.date}</span>
+            <span className="date-note"><i className="far fa-calendar-alt"></i> {note.date}</span>
         </div>
     ))
 };

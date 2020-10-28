@@ -11,7 +11,7 @@ function NoteView({noteselect}) {
                  <span>{noteselect.title}</span>
                   <span className="date-note-bar">
                     {noteselect.id != null ?
-                     (<><i class="far fa-calendar-alt"></i>{noteselect.date}</>)
+                     (<><i className="far fa-calendar-alt"></i>{noteselect.date}</>)
                      :''}
                   </span>
                      
