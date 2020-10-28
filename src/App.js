@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import './App.css';
+import ModalPopup from './components/ModalPopup';
 import NoteForm from './components/NoteForm';
 import NotesList from './components/NotesList';
 import NoteView from './components/NoteView';
@@ -20,6 +21,7 @@ function App() {
   const [edit, setEdit] = useState(false);
   const [operation, setOperation] = useState(false);
   const [listshow, setListShow] = useState(true);
+  const [show, setShow] = useState(false);
   
   
   const selectNote = id => {
@@ -106,9 +108,6 @@ function App() {
     setNovo(false);
 
     setListShow(false);
-    // setNoteselect({id: null, title: '', date: '', note:''});
-
-
   }
 
   function handleClickNew() {
@@ -118,6 +117,23 @@ function App() {
     setNovo(true);
 
     setListShow(false);
+  }
+
+  function handleClickDelete() {
+    if (noteselect.id === null) {
+      return;
+    }
+
+    setShow(true);
+  }
+
+  function ConfirmDelete(op) {
+    
+    if (op) {
+      removeNote();
+    }
+
+    setShow(false);
   }
 
   return (
@@ -134,7 +150,7 @@ function App() {
              <ul>
                  <li className='item-menu'><i className="far fa-file-alt" onClick={() => handleClickNew()}></i></li>
                  <li className='item-menu'><i className="fas fa-pencil-alt" onClick={() => handleClickEdit()}></i></li>
-                 <li className='item-menu'><i className="far fa-trash-alt" onClick={() => removeNote()}></i></li>
+                 <li className='item-menu'><i className="far fa-trash-alt" onClick={() => handleClickDelete()}></i></li>
              </ul>   
           </div>
           <NotesList notes={notes} selectNote={selectNote} />
@@ -149,7 +165,7 @@ function App() {
         
       </div>
    
-
+      <ModalPopup show={show} ConfirmDelete={ConfirmDelete} titlenota={noteselect.title} />       
     </>
   );
 }
